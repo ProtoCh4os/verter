@@ -1,11 +1,12 @@
 import colors from 'vuetify/es5/util/colors';
+import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 
 export default {
   target: 'server',
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    titleTemplate: '%s - dops',
-    title: 'dops',
+    titleTemplate: '%s - D-ops',
+    title: 'D-ops',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -67,5 +68,17 @@ export default {
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {},
+  build: {
+    extend(config, _ctx) {
+      if (!config.resolve) {
+        config.resolve = {};
+      }
+      if (!config.resolve.plugins) {
+        config.resolve.plugins = [];
+      }
+      config.resolve.plugins.push(
+        new TsconfigPathsPlugin({ configFile: './tsconfig.json' }),
+      );
+    },
+  },
 };

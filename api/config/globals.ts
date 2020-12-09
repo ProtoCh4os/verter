@@ -6,7 +6,7 @@ import './prototypes';
 const _global = global as any;
 _global.respondError = (
   res: Res,
-  rawError: string | Array<string | any[]> = ['Erro interno do servidor'],
+  rawError: string | Array<string | any[]> = ['Internal server error'],
   status = 500,
   headers: CommonObject<string> = {},
 ): Response | void => {
@@ -23,7 +23,7 @@ _global.respondError = (
 
 _global.respondSuccess = (
   res: Res,
-  message: any = 'Operação realizada com sucesso!',
+  message: any = 'Operation successful',
   status = 200,
   headers: CommonObject<string> = {},
 ): Response | void => {

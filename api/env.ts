@@ -8,6 +8,10 @@ const schema = object({
   NODE_ENV: string()
     .required()
     .oneOf(['test', 'development', 'production', 'staging']),
+  MONGODB_HOST: string().required(),
+  MONGODB_DB: string().required(),
+  MONGODB_USER: string(),
+  MONGODB_PASS: string(),
 }).required();
 
 const filename = process.env.NODE_ENV === 'test' ? '.env.test' : '.env';
@@ -31,4 +35,4 @@ if (process.env.NODE_ENV !== 'test') {
   });
 } else env = (process.env as any) as typeof env;
 
-export default env;
+export default env as InferType<typeof schema>;
