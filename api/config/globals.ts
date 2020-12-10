@@ -23,7 +23,7 @@ _global.respondError = (
 
 _global.respondSuccess = (
   res: Res,
-  message: any = 'Operation successful',
+  message: string | number | CommonObject = 'Operation successful',
   status = 200,
   headers: CommonObject<string> = {},
 ): Response | void => {

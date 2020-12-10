@@ -63,9 +63,10 @@ class App {
     err: Error | ValidationError,
     req: Request,
     res: Response,
+    _next: Next,
   ): Response | void {
     if (err instanceof SyntaxError && 'body' in err && !res.headersSent) {
-      return respondError(res, 'Erro em interpretação do JSON', 400);
+      return respondError(res, 'Invalid JSON data', 400);
     }
     if (err instanceof ValidationError)
       return respondError(res, err.errors, 400);

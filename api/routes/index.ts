@@ -1,9 +1,8 @@
+import session from './session';
 import { Router } from 'express';
 
 const router = Router();
 
-router.get('*', (_req, res) => {
-  return respondSuccess(res);
-});
+router.use('/login', session);
 
 export default router;

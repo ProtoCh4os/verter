@@ -18,6 +18,6 @@
     },
     "types": ["@types/node", "@nuxt/types"]
   },
-  "include": ["./@types", "./api", "./pages"],
+  "include": ["./@types", "./api", "./pages", "./interfaces"],
   "exclude": ["node_modules", ".nuxt", "dist"]
 }

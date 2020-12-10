@@ -26,6 +26,9 @@ module.exports = {
   plugins: ['prettier', '@typescript-eslint'],
   // add your custom rules here
   rules: {
+    'no-undef': 'off',
+    'import/order': 'off',
+    'require-await': 'off',
     'no-redeclare': 'off',
     'import/no-unresolved': 'off',
     'no-continue': 'off',

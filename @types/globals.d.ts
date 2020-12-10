@@ -1,17 +1,18 @@
-import { NextFunction, Request, Response } from 'express';
 import { Document } from 'mongoose';
 import { ParsedQs } from 'qs';
+import { ResBody as _ResBody } from '../interfaces/common';
+import { NextFunction, Request, Response } from 'express';
 
 declare global {
   /**
    * Utility types
    */
+  type CommonObject<T = any> = Record<string, T>;
+
   type RequiredProp<T extends CommonObject, K extends keyof T> = T &
     Required<Pick<T, K>>;
 
   type Extensible<T, C = any> = T & { [key: string]: C };
-
-  type CommonObject<T = any> = Record<string, T>;
 
   /**
    * Express-related types
@@ -20,6 +21,8 @@ declare global {
   type Res<T = any> = Response<T>;
   type Req<Body = any, Query = ParsedQs> = Request<any, Body, Body, Query>;
   type Next = NextFunction;
+
+  type ResBody<T> = _ResBody<T>;
 
   /**
    * Mongo-related types
@@ -31,19 +34,19 @@ declare global {
    * Functions
    */
 
-  function respondError(
-    res: Res,
-    rawError?: string | (string | any[])[],
+  function respondError<T extends string | (string | any[])[]>(
+    res: Res<T>,
+    rawError?: T,
     status?: number,
     headers?: CommonObject<string>,
-  ): Res<any>;
+  ): Res<T>;
 
-  function respondSuccess(
-    res: Res,
-    message?: any,
+  function respondSuccess<T extends string | number | CommonObject>(
+    res: Res<T>,
+    message?: T,
     status?: number,
     headers?: CommonObject<string>,
-  ): Res<any>;
+  ): Res<T>;
 
   function respondFile(
     res: Res,
