@@ -3,6 +3,6 @@ import { Router } from 'express';
 
 const router = Router();
 
-router.use('/login', session);
+router.use('/session', session);
 
 export default router;

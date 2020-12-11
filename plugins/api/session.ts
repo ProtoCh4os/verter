@@ -7,7 +7,7 @@ export async function login(
   pass: string,
 ): Promise<LoginResBody | false> {
   try {
-    const req = await instance.post<ResBody<LoginResBody>>('/login', {
+    const req = await instance.post<ResBody<LoginResBody>>('/session/login', {
       user,
       pass,
     });
@@ -23,4 +23,10 @@ export async function login(
   }
 }
 
-export default { login };
+export async function logout(): Promise<void> {
+  try {
+    await instance.post('/session/logout');
+  } catch (err) {}
+}
+
+export default { login, logout };

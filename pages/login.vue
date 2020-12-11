@@ -9,14 +9,18 @@
             <h3>Login</h3>
             <br />
             <v-text-field v-model="form.user" label="Username"></v-text-field>
-            <v-text-field v-model="form.pass" label="Password"></v-text-field>
+            <v-text-field
+              v-model="form.pass"
+              type="password"
+              label="Password"
+            ></v-text-field>
             <br />
             <v-btn
               :disabled="loading"
               :loading="loading"
               color="secondary"
               raised
-              @click="login()"
+              @click="login"
               >Login</v-btn
             >
           </div>
@@ -45,18 +49,25 @@ export default {
     };
   },
   methods: {
+    go() {
+      this.$router.replace('/inspire');
+    },
     login: debounce(async function () {
       this.loading = true;
       const { user, pass } = this.form;
 
       const log = await sdk.session.login(user, pass);
       if (log) {
-        this.$store.commit('session/login', {
+        const data = {
           id: log.id,
-          login: log.id,
-          name: log.id,
+          login: this.form.user,
+          token: log.token,
+          name: log.name,
           loggedAt: new Date(now()),
-        });
+        };
+        this.$store.commit('session/login', data);
+
+        this.$router.replace('/inspire');
       } else {
         this.snackbar = true;
       }

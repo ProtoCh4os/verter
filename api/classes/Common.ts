@@ -10,8 +10,8 @@ export default <ModelInterface = any>(schema: Schema, collection: string) => {
 
   class Common {
     public static async find(
-      query: Partial<ModelInterface>,
-    ): Promise<ModelInterface[]> {
+      query: Partial<ModelInterface & MongoDocument>,
+    ): Promise<(ModelInterface & MongoDocument)[]> {
       return model.find(query as any).exec();
     }
   }

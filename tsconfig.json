@@ -16,8 +16,15 @@
       "~/*": ["./*"],
       "@/*": ["./*"]
     },
-    "types": ["@types/node", "@nuxt/types"]
+    "types": ["@types/node", "@nuxt/types", "./@types"]
   },
-  "include": ["./@types", "./api", "./pages", "./interfaces"],
+  "include": [
+    "./@types",
+    "./api",
+    "./pages",
+    "./interfaces",
+    "./plugins",
+    "./middleware"
+  ],
   "exclude": ["node_modules", ".nuxt", "dist"]
 }

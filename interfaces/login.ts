@@ -1,4 +1,4 @@
 export type LoginResBody = {
   id: string;
-  token: string;
+  name: string;
 };

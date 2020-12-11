@@ -1,8 +1,11 @@
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
+import { config } from 'dotenv';
+
+config();
 
 export default {
   target: 'server',
-  // Global page headers (https://go.nuxtjs.dev/config-head)
+  env: process.env,
   head: {
     titleTemplate: '%s - D-ops',
     title: 'D-ops',
@@ -13,45 +16,38 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
-
-  // Global CSS (https://go.nuxtjs.dev/config-css)
   css: ['./assets/variables.scss'],
 
-  // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: ['~/plugins/api/sdk'],
 
-  // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
 
-  // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
-  buildModules: [
-    // https://go.nuxtjs.dev/typescript
-    '@nuxt/typescript-build',
-    // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify',
-  ],
+  buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify'],
 
-  // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
-    // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxt/http',
+    [
+      'nuxt-session',
+      {
+        name: 'session',
+        secret: process.env.JWT_TOKEN || '414b4c565c84df80263415c3c43fb5de',
+      },
+    ],
   ],
 
   telemetry: false,
 
-  // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
-
-  // Server Middleware
   serverMiddleware: [{ path: '/api', handler: '~/api/index.ts' }],
 
-  // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
   },
 
-  // Build Configuration (https://go.nuxtjs.dev/config-build)
+  router: {
+    middleware: ['session'],
+  },
+
   build: {
     extend(config, ctx) {
       if (ctx.isDev) {

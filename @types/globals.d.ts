@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import { Document } from 'mongoose';
 import { ParsedQs } from 'qs';
 import { ResBody as _ResBody } from '../interfaces/common';
@@ -20,6 +21,7 @@ declare global {
 
   type Res<T = any> = Response<T>;
   type Req<Body = any, Query = ParsedQs> = Request<any, Body, Body, Query>;
+
   type Next = NextFunction;
 
   type ResBody<T> = _ResBody<T>;

@@ -8,6 +8,7 @@ const schema = object({
   NODE_ENV: string()
     .required()
     .oneOf(['test', 'development', 'production', 'staging']),
+  JWT_TOKEN: string().required(),
   MONGODB_HOST: string().required(),
   MONGODB_DB: string().required(),
   MONGODB_USER: string(),
