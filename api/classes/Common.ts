@@ -1,3 +1,4 @@
+import { isArray } from 'lodash';
 import { Schema } from 'mongoose';
 import mongoDb from '../services/mongo';
 
@@ -13,6 +14,15 @@ export default <ModelInterface = any>(schema: Schema, collection: string) => {
       query: Partial<ModelInterface & MongoDocument>,
     ): Promise<(ModelInterface & MongoDocument)[]> {
       return model.find(query as any).exec();
+    }
+
+    public async insert(
+      query:
+        | Partial<ModelInterface & MongoDocument>
+        | Partial<ModelInterface & MongoDocument>[],
+    ): Promise<void> {
+      if (!isArray(query)) query = [query];
+      await mongoDb.collection(collection).insertMany(query);
     }
   }
 

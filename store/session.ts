@@ -1,5 +1,3 @@
-import sdk from '../plugins/api/sdk';
-
 type State = {
   loggedIn: boolean;
   user: {
@@ -25,6 +23,6 @@ export const mutations = {
   async logout(st: State) {
     st.loggedIn = false;
     st.user = null;
-    await sdk.session.logout();
+    await this.$sdk.session.logout();
   },
 };

@@ -2,15 +2,19 @@
   <div class="body">
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="6">
-        <v-card class="card">
-          <div class="text-center">
-            <h1>D-Ops</h1>
-            <hr />
-            <h3>Login</h3>
-            <br />
-            <v-text-field v-model="form.user" label="Username"></v-text-field>
+        <v-card outlined elevation="5" class="card">
+          <v-card-title class="headline text-center">
+            <h1 style="margin: 0 auto">D-ops</h1>
+          </v-card-title>
+          <v-form @submit.prevent>
+            <v-text-field
+              v-model="form.user"
+              required
+              label="Username"
+            ></v-text-field>
             <v-text-field
               v-model="form.pass"
+              required
               type="password"
               label="Password"
             ></v-text-field>
@@ -18,12 +22,14 @@
             <v-btn
               :disabled="loading"
               :loading="loading"
+              type="submit"
               color="secondary"
               raised
+              block
               @click="login"
               >Login</v-btn
             >
-          </div>
+          </v-form>
         </v-card></v-col
       >
       <v-snackbar v-model="snackbar">
@@ -33,11 +39,11 @@
   </div>
 </template>
 
-<script>
-import sdk from '@/plugins/api/sdk';
+<script lang="ts">
 import { debounce, now } from 'lodash';
+import Vue from 'vue';
 
-export default {
+export default Vue.extend({
   data() {
     return {
       form: {
@@ -49,32 +55,30 @@ export default {
     };
   },
   methods: {
-    go() {
-      this.$router.replace('/inspire');
+    login() {
+      return debounce(async () => {
+        this.loading = true;
+        const { user, pass } = this.form;
+
+        const log = await this.$sdk.session.login(user, pass);
+        if (log) {
+          const data = {
+            id: log.id,
+            login: this.form.user,
+            name: log.name,
+            loggedAt: new Date(now()),
+          };
+          this.$store.commit('session/login', data);
+
+          this.$router.replace('/');
+        } else {
+          this.snackbar = true;
+        }
+        this.loading = false;
+      })();
     },
-    login: debounce(async function () {
-      this.loading = true;
-      const { user, pass } = this.form;
-
-      const log = await sdk.session.login(user, pass);
-      if (log) {
-        const data = {
-          id: log.id,
-          login: this.form.user,
-          token: log.token,
-          name: log.name,
-          loggedAt: new Date(now()),
-        };
-        this.$store.commit('session/login', data);
-
-        this.$router.replace('/inspire');
-      } else {
-        this.snackbar = true;
-      }
-      this.loading = false;
-    }),
   },
-};
+});
 </script>
 
 <style lang="sass" scoped>

@@ -1,7 +1,6 @@
 {
   "name": "dops",
   "version": "1.0.0",
-  "private": true,
   "scripts": {
     "dev": "nuxt-ts",
     "build": "nuxt-ts build",
@@ -20,6 +19,7 @@
     "@types/ms": "^0.7.31",
     "@types/winston": "^2.4.4",
     "@types/yup": "^0.29.10",
+    "connect-mongo": "^3.2.0",
     "core-js": "^3.6.5",
     "crypto-js": "4.0.0",
     "dotenv": "^8.2.0",
@@ -39,6 +39,7 @@
   "devDependencies": {
     "@nuxt/types": "^2.14.10",
     "@nuxt/typescript-build": "^2.0.3",
+    "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/eslint-config": "^3.1.0",
     "@nuxtjs/eslint-config-typescript": "^3.0.0",
     "@nuxtjs/eslint-module": "^2.0.0",
@@ -46,6 +47,8 @@
     "@typescript-eslint/eslint-plugin": "^4.9.1",
     "@typescript-eslint/parser": "^4.9.1",
     "babel-eslint": "^10.1.0",
+    "cd": "^0.3.3",
+    "dops": "/var/local/dev/dpg/dops",
     "eslint": "^7.10.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^6.12.0",

@@ -18,7 +18,7 @@
             <v-list-item-title> Settings </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item exact @click="logout()">
+        <v-list-item exact @click="logout">
           <v-list-item-action>
             <v-icon>mdi-logout</v-icon>
           </v-list-item-action>

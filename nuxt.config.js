@@ -1,11 +1,14 @@
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
-import { config } from 'dotenv';
-
-config();
+import mongooseConnection from './api/services/mongo';
+import mongo from 'connect-mongo';
 
 export default {
   target: 'server',
-  env: process.env,
+
+  axios: {
+    baseURL: 'google.com',
+  },
+
   head: {
     titleTemplate: '%s - D-ops',
     title: 'D-ops',
@@ -18,20 +21,35 @@ export default {
   },
   css: ['./assets/variables.scss'],
 
-  plugins: ['~/plugins/api/sdk'],
+  plugins: [{ src: '~/plugins/api/sdk', mode: 'client' }],
 
   components: true,
 
-  buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify'],
+  buildModules: [
+    '@nuxt/typescript-build',
+    '@nuxtjs/vuetify',
+    [
+      '@nuxtjs/dotenv',
+      {
+        only: ['BASE_URL'],
+      },
+    ],
+  ],
 
   modules: [
     '@nuxtjs/axios',
     '@nuxt/http',
     [
       'nuxt-session',
-      {
-        name: 'session',
-        secret: process.env.JWT_TOKEN || '414b4c565c84df80263415c3c43fb5de',
+      (session) => {
+        const MongoStore = mongo(session);
+        return {
+          name: 'session',
+          secret: process.env.JWT_TOKEN || '414b4c565c84df80263415c3c43fb5de',
+          store: new MongoStore({
+            mongooseConnection,
+          }),
+        };
       },
     ],
   ],
@@ -62,6 +80,12 @@ export default {
       config.resolve.plugins.push(
         new TsconfigPathsPlugin({ configFile: './tsconfig.json' }),
       );
+    },
+  },
+
+  publicRuntimeConfig: {
+    axios: {
+      baseURL: `${process.env.BASE_URL || ''}/api`,
     },
   },
 };
