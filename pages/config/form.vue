@@ -8,26 +8,27 @@
         transition="dialog-bottom-transition"
       >
         <v-card>
-          <v-toolbar dark color="primary" @>
-            <v-btn icon dark @click="close()">
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-            <v-toolbar-title>New project</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-              <v-btn dark text @click="save()"> Save </v-btn>
-            </v-toolbar-items>
-          </v-toolbar>
-          <v-divider></v-divider>
-          <v-form>
+          <v-form lazy-validation @submit.prevent="save">
+            <v-toolbar dark color="primary" @>
+              <v-btn icon dark @click="close()">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+              <v-toolbar-title>{{ title }}</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-toolbar-items>
+                <v-btn type="submit" dark text @click="save()"> Save </v-btn>
+              </v-toolbar-items>
+            </v-toolbar>
+            <v-divider></v-divider>
             <v-row align-content="center" justify="center">
               <v-col cols="11">
                 <v-row>
                   <v-col cols="8" md="12">
                     <v-text-field
-                      v-model="form.name"
-                      :counter="50"
+                      v-model="form.description"
                       label="Description"
+                      :counter="50"
+                      required
                     ></v-text-field>
                   </v-col>
                   <v-col cols="3" md="12">
@@ -90,19 +91,23 @@ export default Vue.extend({
     return {
       open: true,
       form: {
-        name: '',
+        description: '',
         icon: null as File | null,
         buildCommands: [''],
         outputFolder: '',
         outputRuntime: [''],
       },
+      saving: false,
     };
   },
   computed: {
-    iconPath() {
+    iconPath(): string {
       if (!this.form.icon) return '';
       const urlCreator = window.URL || window.webkitURL;
       return urlCreator.createObjectURL(this.form.icon);
+    },
+    title(): string {
+      return this.form.description || 'New project';
     },
   },
   methods: {
@@ -110,8 +115,26 @@ export default Vue.extend({
       this.open = false;
       this.$emit('closeForm');
     },
-    save() {
-      console.log(this.form);
+    async save() {
+      this.saving = true;
+
+      const icon = this.form.icon?.name;
+      const body = {
+        ...this.form,
+        icon,
+      };
+
+      const ins = await this.$sdk.project.add(body);
+
+      if (ins) {
+        this.$nuxt.$emit('showError', `Project ${ins.id} added`, 'success');
+
+        this.saving = false;
+        this.close();
+        return;
+      }
+
+      this.$nuxt.$emit('showError', `Saving failed`);
     },
   },
 });

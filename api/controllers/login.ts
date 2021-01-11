@@ -1,4 +1,4 @@
-import { LoginResBody } from '~/interfaces/login';
+import { LoginResBody } from '~/api/interfaces/shared/login';
 import User from '../classes/User';
 import crypto from '../services/crypt';
 import { Schema } from '../validators/login';
@@ -29,7 +29,7 @@ export async function login(req: Req<Schema>, res: Res): Promise<Res> {
 }
 
 export async function logout(req: Req, res: Res): Promise<Res> {
-  if (req.session.auth) req.session.auth = undefined;
+  if (req.session.auth) (req.session.auth as any) = undefined;
   return respondSuccess(res);
 }
 

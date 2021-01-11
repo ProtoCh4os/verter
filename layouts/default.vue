@@ -34,6 +34,7 @@
     </v-app-bar>
     <v-main class="main">
       <nuxt />
+      <messager />
     </v-main>
     <v-footer absolute app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
@@ -42,7 +43,10 @@
 </template>
 
 <script>
+import messager from './messager.vue';
+
 export default {
+  components: { messager },
   data() {
     return {
       drawer: false,

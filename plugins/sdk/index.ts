@@ -1,11 +1,14 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios';
 import { AxiosError } from 'axios';
 import { Plugin } from '@nuxt/types';
-import session from './session';
 import { $axios } from '../axios';
+
+import session from './session';
+import project from './project';
 
 const _sdk = (ax: NuxtAxiosInstance) => ({
   session: session(ax),
+  project: project(ax),
 });
 
 const sdk = _sdk($axios);

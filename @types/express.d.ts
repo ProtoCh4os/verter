@@ -16,7 +16,7 @@ declare module 'express' {
       };
       req: Request;
       save: Function;
-      auth?: {
+      auth: {
         id: string;
         login: string;
         name: string;

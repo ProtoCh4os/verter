@@ -1,5 +1,5 @@
-import { LoginResBody } from '../../interfaces/login';
-import { ResBody } from '../../interfaces/common';
+import { LoginResBody } from '~/api/interfaces/shared/login';
+import { ResBody } from '~/api/interfaces/shared/common';
 import { NuxtAxiosInstance } from '@nuxtjs/axios';
 
 export default (instance: NuxtAxiosInstance) => ({

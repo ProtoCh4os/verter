@@ -17,7 +17,7 @@ export default {
   },
   css: ['./assets/variables.scss'],
 
-  plugins: [{ src: '~/plugins/sdk', mode: 'client' }],
+  plugins: [{ src: '~/plugins/sdk' }],
 
   components: true,
 

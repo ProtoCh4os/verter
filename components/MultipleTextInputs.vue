@@ -8,21 +8,30 @@
       :label="`Command ${index + 1}`"
     ></v-text-field>
     <v-btn color="primary" @click="add"><v-icon>mdi-plus</v-icon></v-btn>
-    <v-btn color="info" @click="remove"><v-icon>mdi-minus</v-icon></v-btn>
-    <v-btn color="error" @click="clear"><v-icon>mdi-close</v-icon></v-btn>
+    <v-btn color="info" :disabled="!canRemove" @click="remove"
+      ><v-icon>mdi-minus</v-icon></v-btn
+    >
+    <v-btn color="error" :disabled="!canRemove" @click="clear"
+      ><v-icon>mdi-close</v-icon></v-btn
+    >
   </div>
 </template>
 
 <script lang="ts">
 import { isArray } from 'lodash';
-import Vue from 'vue';
+import Vue, { PropOptions } from 'vue';
 
 export default Vue.extend({
   props: {
     data: {
       type: Array,
       required: true,
-      default: () => [''] as string[],
+      default: () => [''],
+    } as PropOptions<string[]>,
+  },
+  computed: {
+    canRemove(): boolean {
+      return this.data.length > 1;
     },
   },
   methods: {
@@ -31,7 +40,7 @@ export default Vue.extend({
       this.focusLast();
     },
     remove() {
-      if (this.data.length > 1) this.data.pop();
+      if (this.canRemove) this.data.pop();
       this.focusLast();
     },
     clear() {

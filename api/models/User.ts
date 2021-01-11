@@ -1,6 +1,7 @@
 import { Schema } from 'mongoose';
+import { MongoModelInterface } from './common';
 
-export type UserModelInterface = {
+export type UserModelInterface = MongoModelInterface & {
   username: string;
   password: string;
   salt: string;

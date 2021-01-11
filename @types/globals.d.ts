@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
 import { Document } from 'mongoose';
 import { ParsedQs } from 'qs';
-import { ResBody as _ResBody } from '../interfaces/common';
+import { ResBody as _ResBody } from '../api/interfaces/shared/common';
 import { NextFunction, Request, Response } from 'express';
 
 declare global {

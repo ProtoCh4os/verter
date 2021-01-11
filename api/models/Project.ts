@@ -1,6 +1,7 @@
 import { Schema } from 'mongoose';
+import { MongoModelInterface } from './common';
 
-export type ProjectModelInterface = {
+export type ProjectModelInterface = MongoModelInterface & {
   description: string;
   icon: string | null;
   config: {

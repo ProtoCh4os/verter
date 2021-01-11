@@ -20,6 +20,6 @@
     },
     "types": ["@types/node", "@nuxt/types", "@nuxtjs/axios"]
   },
-  "include": ["./@types", "./**/*.ts"],
+  "include": ["./@types", "./**/*.ts", "./**/*.vue"],
   "exclude": ["node_modules", ".nuxt", "dist"]
 }
