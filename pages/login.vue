@@ -1,20 +1,24 @@
 <template>
   <div class="body">
-    <v-row justify="center" align="center">
-      <v-col cols="12" sm="8" md="6">
+    <v-row justify="center" align="center" style="height: 100%">
+      <v-col cols="10" sm="6" md="4" lg="4" xl="4">
         <v-card outlined elevation="5" class="card">
           <v-card-title class="headline text-center">
             <h1 style="margin: 0 auto">D-ops</h1>
           </v-card-title>
           <v-form @submit.prevent>
             <v-text-field
+              id="user"
               v-model="form.user"
+              name="user"
               required
               label="Username"
             ></v-text-field>
             <v-text-field
+              id="pass"
               v-model="form.pass"
               required
+              name="pass"
               type="password"
               label="Password"
             ></v-text-field>
@@ -23,7 +27,7 @@
               :disabled="loading"
               :loading="loading"
               type="submit"
-              color="secondary"
+              color="primary"
               raised
               block
               @click="login"
@@ -42,6 +46,8 @@
 <script lang="ts">
 import { debounce, now } from 'lodash';
 import Vue from 'vue';
+import { getModule } from 'vuex-module-decorators';
+import session from '~/store/session';
 
 export default Vue.extend({
   data() {
@@ -57,6 +63,8 @@ export default Vue.extend({
   methods: {
     login() {
       return debounce(async () => {
+        const sessionStore = getModule(session, this.$store);
+
         this.loading = true;
         const { user, pass } = this.form;
 
@@ -68,7 +76,7 @@ export default Vue.extend({
             name: log.name,
             loggedAt: new Date(now()),
           };
-          this.$store.commit('session/login', data);
+          sessionStore.login(data);
 
           this.$router.replace('/');
         } else {
@@ -86,7 +94,7 @@ export default Vue.extend({
 .body
   width: 100%
   height: 100%
-  background-color: $primary-color
+  background: linear-gradient(0, #242F40 0%, #006494 35%, #5C5C5C 100%)
 
 .card
   padding: 50px

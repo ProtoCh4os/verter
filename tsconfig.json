@@ -7,7 +7,9 @@
     "typeRoots": ["./node_modules/@types", "./@types"],
     "esModuleInterop": true,
     "allowJs": true,
+    "importHelpers": true,
     "sourceMap": true,
+    "allowUnusedLabels": true,
     "strict": true,
     "noEmit": true,
     "experimentalDecorators": true,
@@ -18,13 +20,6 @@
     },
     "types": ["@types/node", "@nuxt/types", "@nuxtjs/axios"]
   },
-  "include": [
-    "./@types",
-    "./api",
-    "./pages",
-    "./interfaces",
-    "./plugins",
-    "./middleware"
-  ],
+  "include": ["./@types", "./**/*.ts"],
   "exclude": ["node_modules", ".nuxt", "dist"]
 }

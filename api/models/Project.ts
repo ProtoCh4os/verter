@@ -6,6 +6,7 @@ export type ProjectModelInterface = {
   config: {
     buildCommands: string[];
     outputFolder: string;
+    outputRuntime: string[];
   };
   versions: {
     major: number;
@@ -22,6 +23,7 @@ export const ProjectModel = new Schema<ProjectModelInterface>({
   config: {
     buildCommands: [String],
     outputFolder: String,
+    outputRuntime: [String],
   },
   versions: [
     {

@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-if="logged" v-model="drawer" clipped fixed app>
+    <v-navigation-drawer v-if="logged" v-model="drawer" fixed app>
       <v-list>
         <v-list-item router to="/" exact>
           <v-list-item-action>
@@ -64,6 +64,5 @@ export default {
 </script>
 
 <style lang="sass">
-.main
-  padding: 0
+@import '~/assets/base.sass'
 </style>

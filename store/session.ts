@@ -1,3 +1,6 @@
+import { Module, VuexModule, Mutation } from 'vuex-module-decorators';
+import { sdk } from '~/plugins/sdk';
+
 type State = {
   loggedIn: boolean;
   user: {
@@ -8,21 +11,25 @@ type State = {
   } | null;
 };
 
-const defaultState: State = {
-  loggedIn: false,
-  user: null,
-};
+@Module({
+  name: 'session',
+  namespaced: true,
+  stateFactory: true,
+})
+export default class extends VuexModule {
+  public loggedIn = false;
+  public user: State['user'] = null;
 
-export const state = () => defaultState;
+  @Mutation
+  login(user: State['user']) {
+    this.loggedIn = true;
+    this.user = user;
+  }
 
-export const mutations = {
-  login(st: State, user: State['user']) {
-    st.loggedIn = true;
-    st.user = user;
-  },
-  async logout(st: State) {
-    st.loggedIn = false;
-    st.user = null;
-    await this.$sdk.session.logout();
-  },
-};
+  @Mutation
+  async logout() {
+    this.loggedIn = false;
+    this.user = null;
+    await sdk.session.logout();
+  }
+}

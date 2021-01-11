@@ -5,10 +5,6 @@ import mongo from 'connect-mongo';
 export default {
   target: 'server',
 
-  axios: {
-    baseURL: 'google.com',
-  },
-
   head: {
     titleTemplate: '%s - D-ops',
     title: 'D-ops',
@@ -21,7 +17,7 @@ export default {
   },
   css: ['./assets/variables.scss'],
 
-  plugins: [{ src: '~/plugins/api/sdk', mode: 'client' }],
+  plugins: [{ src: '~/plugins/sdk', mode: 'client' }],
 
   components: true,
 
@@ -60,6 +56,16 @@ export default {
 
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
+    theme: {
+      dark: true,
+      themes: {
+        dark: {
+          primary: '#006494',
+          secondary: '#242F40',
+          accent: '#5C5C5C',
+        },
+      },
+    },
   },
 
   router: {

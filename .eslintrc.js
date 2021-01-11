@@ -26,6 +26,7 @@ module.exports = {
   plugins: ['prettier', '@typescript-eslint'],
   // add your custom rules here
   rules: {
+    'import/no-mutable-exports': 'off',
     'no-undef': 'off',
     'import/order': 'off',
     'require-await': 'off',
@@ -55,16 +56,7 @@ module.exports = {
     'jest/valid-expect': 'error',
     'security/detect-object-injection': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      {
-        js: 'never',
-        jsx: 'never',
-        ts: 'never',
-        tsx: 'never',
-      },
-    ],
+    'import/extensions': 'off',
   },
   settings: {
     'import/resolver': {

@@ -3834,6 +3834,7 @@ domutils@^1.5.1, domutils@^1.7.0:
     "@types/ms" "^0.7.31"
     "@types/winston" "^2.4.4"
     "@types/yup" "^0.29.10"
+    connect-mongo "^3.2.0"
     core-js "^3.6.5"
     crypto-js "4.0.0"
     dotenv "^8.2.0"
@@ -9572,6 +9573,11 @@ vuetify@^2:
   version "2.3.20"
   resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-2.3.20.tgz#41326c97a330ababe929eb4c0919fb0cad2e8a46"
   integrity sha512-W2GD+ex7sCOG3Z9gzspLcxw4osMAeXu4ldQXEzTr5xbqEWOzVSVU9Sx24xRUMpWsbrNY3YA/fBKrEUAkCFchpw==
+
+vuex-module-decorators@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/vuex-module-decorators/-/vuex-module-decorators-1.0.1.tgz#d34dafb5428a3636f1c26d3d014c15fc9659ccd0"
+  integrity sha512-FLWZsXV5XAtl/bcKUyQFpnSBtpc3wK/7zSdy9oKbyp71mZd4ut5y2zSd219wWW9OG7WUOlVwac4rXFFDVnq7ug==
 
 vuex@^3.6.0:
   version "3.6.0"
