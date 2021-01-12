@@ -22,7 +22,7 @@ export default (instance: NuxtAxiosInstance) => ({
     if (page <= 0) return { projects: [], count: 0 };
     try {
       const req = await instance.get<ResBody<ResListProject>>('/project', {
-        data: { page },
+        params: { page },
       });
 
       const { data } = req;

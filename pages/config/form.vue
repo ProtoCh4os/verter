@@ -16,7 +16,7 @@
               <v-toolbar-title>{{ title }}</v-toolbar-title>
               <v-spacer></v-spacer>
               <v-toolbar-items>
-                <v-btn type="submit" dark text @click="save()"> Save </v-btn>
+                <v-btn type="submit" dark text> Save </v-btn>
               </v-toolbar-items>
             </v-toolbar>
             <v-divider></v-divider>
@@ -84,6 +84,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import MultipleTextInputs from '~/components/MultipleTextInputs.vue';
+import { debounce } from 'lodash';
 
 export default Vue.extend({
   components: { MultipleTextInputs },
@@ -115,26 +116,28 @@ export default Vue.extend({
       this.open = false;
       this.$emit('closeForm');
     },
-    async save() {
-      this.saving = true;
+    save() {
+      return debounce(async () => {
+        this.saving = true;
 
-      const icon = this.form.icon?.name;
-      const body = {
-        ...this.form,
-        icon,
-      };
+        const icon = this.form.icon?.name;
+        const body = {
+          ...this.form,
+          icon,
+        };
 
-      const ins = await this.$sdk.project.add(body);
+        const ins = await this.$sdk.project.add(body);
 
-      if (ins) {
-        this.$nuxt.$emit('showError', `Project ${ins.id} added`, 'success');
+        if (ins) {
+          this.$nuxt.$emit('showError', `Project ${ins.id} added`, 'success');
 
-        this.saving = false;
-        this.close();
-        return;
-      }
+          this.saving = false;
+          this.close();
+          return;
+        }
 
-      this.$nuxt.$emit('showError', `Saving failed`);
+        this.$nuxt.$emit('showError', `Saving failed`);
+      })();
     },
   },
 });
