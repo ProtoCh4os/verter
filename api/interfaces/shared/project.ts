@@ -1,7 +1,7 @@
 import { ProjectModelInterface } from '~/api/models/Project';
 
 export interface ResNewProject {
-  id: number;
+  id: string;
 }
 
 export interface ResListProject {

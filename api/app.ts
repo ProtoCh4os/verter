@@ -1,5 +1,4 @@
 import './config/globals';
-import 'express-async-errors';
 import http, { Server } from 'http';
 import helmet from 'helmet';
 import express, {
@@ -13,6 +12,11 @@ import { isObject, toPairs } from 'lodash';
 import { ValidationError } from 'yup';
 import routes from './routes';
 import logger from './services/logger';
+import cfg from '../nuxt.config';
+
+if (!cfg.dev) {
+  require('express-async-errors');
+}
 
 class App {
   public app: Application;

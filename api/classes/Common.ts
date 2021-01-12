@@ -42,7 +42,7 @@ export default <ModelInterface extends MongoModelInterface = any>(
       query: Partial<ModelInterface>,
       where: Partial<ModelInterface>,
     ): Promise<UpdateWriteOpResult> {
-      const res = await conn.updateOne(where, query);
+      const res = await conn.updateOne(where, { $set: query });
       return res;
     }
 

@@ -1,7 +1,7 @@
 import { ResBody } from '~/api/interfaces/shared/common';
 import { NuxtAxiosInstance } from '@nuxtjs/axios';
 import { ResListProject, ResNewProject } from '~/api/interfaces/shared/project';
-import { Schema } from '~/api/validators/project/new';
+import { Schema } from '~/api/validators/project/add';
 
 export default (instance: NuxtAxiosInstance) => ({
   add: async (form: Schema): Promise<ResNewProject | false> => {
@@ -14,6 +14,17 @@ export default (instance: NuxtAxiosInstance) => ({
         return data.payload;
       }
       return false;
+    } catch (err) {
+      return false;
+    }
+  },
+  edit: async (id: string, form: Schema): Promise<boolean> => {
+    try {
+      const req = await instance.post<ResBody<any>>('/project/' + id, form);
+
+      const { data } = req;
+
+      return data.success;
     } catch (err) {
       return false;
     }

@@ -8,7 +8,7 @@
         transition="dialog-bottom-transition"
       >
         <v-card>
-          <v-form lazy-validation @submit.prevent="save">
+          <v-form @submit.prevent="save">
             <v-toolbar dark color="primary" @>
               <v-btn icon dark @click="close()">
                 <v-icon>mdi-close</v-icon>
@@ -33,12 +33,13 @@
                   </v-col>
                   <v-col cols="3" md="12">
                     <v-file-input
-                      v-model="form.icon"
+                      v-model="form.iconCan"
                       accept="image/*"
                       small-chips
                       show-size
                       label="Logo"
                       truncate-length="15"
+                      @change="upload"
                     >
                       <div slot="prepend-inner">
                         <v-img
@@ -82,21 +83,33 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, { PropOptions } from 'vue';
 import MultipleTextInputs from '~/components/MultipleTextInputs.vue';
+import { ProjectFormInterface } from '~/api/interfaces/forms/project';
 import { debounce } from 'lodash';
 
 export default Vue.extend({
   components: { MultipleTextInputs },
+  props: {
+    editData: {
+      type: Object,
+      required: false,
+      default: () => ({
+        id: '',
+        description: '',
+        icon: null,
+        buildCommands: [''],
+        outputFolder: '',
+        outputRuntime: [''],
+      }),
+    } as PropOptions<ProjectFormInterface>,
+  },
   data() {
     return {
       open: true,
       form: {
-        description: '',
-        icon: null as File | null,
-        buildCommands: [''],
-        outputFolder: '',
-        outputRuntime: [''],
+        ...this.editData,
+        iconCan: null,
       },
       saving: false,
     };
@@ -104,14 +117,24 @@ export default Vue.extend({
   computed: {
     iconPath(): string {
       if (!this.form.icon) return '';
-      const urlCreator = window.URL || window.webkitURL;
-      return urlCreator.createObjectURL(this.form.icon);
+      if (typeof this.form.icon === 'string') return this.form.icon;
+      try {
+        const urlCreator = window.URL || window.webkitURL;
+        return urlCreator.createObjectURL(this.form.icon);
+      } catch (err) {
+        return '';
+      }
     },
     title(): string {
       return this.form.description || 'New project';
     },
   },
   methods: {
+    upload(data?: File) {
+      if (data) {
+        this.form.icon = data;
+      }
+    },
     close() {
       this.open = false;
       this.$emit('closeForm');
@@ -120,20 +143,40 @@ export default Vue.extend({
       return debounce(async () => {
         this.saving = true;
 
-        const icon = this.form.icon?.name;
+        const icon =
+          typeof this.form.icon === 'string'
+            ? this.form.icon
+            : this.form.icon?.name;
         const body = {
           ...this.form,
           icon,
         };
 
-        const ins = await this.$sdk.project.add(body);
+        if (this.form.id) {
+          const ins = await this.$sdk.project.edit(this.form.id, body);
 
-        if (ins) {
-          this.$nuxt.$emit('showError', `Project ${ins.id} added`, 'success');
+          if (ins) {
+            this.$nuxt.$emit(
+              'showError',
+              `Project ${this.form.id} updated`,
+              'success',
+            );
 
-          this.saving = false;
-          this.close();
-          return;
+            this.saving = false;
+            this.close();
+            return;
+          }
+        } else {
+          const ins = await this.$sdk.project.add(body);
+
+          if (ins) {
+            this.form.id = ins.id;
+            this.$nuxt.$emit('showError', `Project ${ins.id} added`, 'success');
+
+            this.saving = false;
+            this.close();
+            return;
+          }
         }
 
         this.$nuxt.$emit('showError', `Saving failed`);

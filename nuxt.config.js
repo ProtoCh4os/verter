@@ -1,10 +1,13 @@
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import mongooseConnection from './api/services/mongo';
 import mongo from 'connect-mongo';
+import { config } from 'dotenv';
+
+config();
 
 export default {
   target: 'server',
-
+  dev: process.env.NODE_ENV !== 'production',
   head: {
     titleTemplate: '%s - D-ops',
     title: 'D-ops',

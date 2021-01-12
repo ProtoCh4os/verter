@@ -6,15 +6,12 @@
         <h1 style="margin: 0 auto">Projects</h1>
 
         <v-btn
-          class="ma-10"
+          class="mt-20"
           dark
-          absolute
-          bottom
           color="primary"
-          large
           fab
-          right
-          @click="openForm = !openForm"
+          style="float: right; margin-top: -70px; position: relative"
+          @click="openForm"
         >
           <v-icon dark> mdi-plus </v-icon>
         </v-btn>
@@ -38,7 +35,9 @@
             </v-tooltip>
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
-                <v-icon v-bind="attrs" v-on="on"> mdi-pencil </v-icon>
+                <v-icon v-bind="attrs" @click="openProject(item)" v-on="on">
+                  mdi-pencil
+                </v-icon>
               </template>
               <span>Edit</span>
             </v-tooltip>
@@ -46,12 +45,17 @@
         </v-data-table>
       </v-col>
     </v-row>
-    <Form v-if="openForm" @closeForm="closeForm()" />
+    <Form
+      v-if="form.open"
+      :edit-data="form.editData"
+      @closeForm="closeForm()"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import { ProjectFormInterface } from '~/api/interfaces/forms/project';
 import { ProjectModelInterface } from '~/api/models/Project';
 import Form from './form.vue';
 
@@ -67,7 +71,10 @@ export default Vue.extend({
   },
   data() {
     return {
-      openForm: false,
+      form: {
+        open: false,
+        editData: undefined as undefined | ProjectFormInterface,
+      },
       projects: {
         headers: [
           {
@@ -97,31 +104,32 @@ export default Vue.extend({
     this.$fetch();
   },
   methods: {
+    openForm() {
+      this.form.open = !this.form.open;
+    },
     closeForm() {
+      this.form.editData = undefined;
       setTimeout(() => {
-        this.openForm = false;
+        this.form.open = false;
+        this.changePage(this.page);
       }, 500);
     },
+    openProject(project: ProjectModelInterface) {
+      this.form.editData = {
+        id: (project._id as unknown) as string,
+        ...project,
+        ...project.config,
+      };
+      this.openForm();
+    },
     async changePage(page: number) {
+      this.page = page;
       this.projects.items = [];
       this.projects.loading = true;
       const { projects, count } = await this.$sdk.project.list(page);
 
-      if (count !== this.projects.count) {
-        const maxPagesRemote = Math.ceil(count / 10);
-        const maxPagesLocal = Math.ceil(this.projects.count / 10);
-        if (maxPagesRemote < maxPagesLocal) {
-          const { projects: newP, count: newC } = await this.$sdk.project.list(
-            maxPagesRemote,
-          );
-
-          this.projects.count = newC;
-          this.projects.items = newP;
-        }
-      } else {
-        this.projects.count = count;
-        this.projects.items = projects;
-      }
+      this.projects.count = count;
+      this.projects.items = projects;
 
       this.projects.loading = false;
     },

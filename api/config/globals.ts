@@ -2,6 +2,7 @@
 import _ from 'lodash';
 import { Response } from 'express';
 import './prototypes';
+import { Types, Document } from 'mongoose';
 
 const _global = global as any;
 _global.respondError = (
@@ -93,6 +94,8 @@ const sanitizeObject = <T extends Record<string, any> | Record<string, any>[]>(
         if (val === undefined) return acc;
         if (_.isArray(val)) return { ...acc, [ind]: val.map(sanitizeObject) };
         if (val instanceof Date) return { ...acc, [ind]: val.toISOString() };
+        if (val instanceof Types.ObjectId) return { ...acc, [ind]: val };
+        if (val instanceof Document) return { ...acc, [ind]: val.toObject() };
         if (_.isObject(val))
           return { ...acc, [ind]: sanitizeObject(val, depth + 1) };
         return { ...acc, [ind]: val };
