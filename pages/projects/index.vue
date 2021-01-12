@@ -3,42 +3,50 @@
     <title-bar title="Settings" />
     <v-row>
       <v-col cols="12" class="pa-10">
-        <h1 style="margin: 0 auto">Settings</h1>
-        <v-expansion-panels>
-          <v-expansion-panel>
-            <v-expansion-panel-header>General</v-expansion-panel-header>
-          </v-expansion-panel>
-          <v-expansion-panel>
-            <v-expansion-panel-header>Projects</v-expansion-panel-header>
-            <v-expansion-panel-content>
-              <v-data-table
-                :loading="projects.loading"
-                :page="page"
-                :headers="projects.headers"
-                :items="projects.items"
-                :server-items-length="projects.count"
-                @update:page="changePage"
-              >
-              </v-data-table>
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-        </v-expansion-panels>
+        <h1 style="margin: 0 auto">Projects</h1>
+
+        <v-btn
+          class="ma-10"
+          dark
+          absolute
+          bottom
+          color="primary"
+          large
+          fab
+          right
+          @click="openForm = !openForm"
+        >
+          <v-icon dark> mdi-plus </v-icon>
+        </v-btn>
+        <v-data-table
+          :loading="projects.loading"
+          :page="page"
+          :headers="projects.headers"
+          :items="projects.items"
+          :server-items-length="projects.count"
+          @update:page="changePage"
+        >
+          {{ /* eslint-disable-next-line */ }}
+          <template v-slot:item.action="{ item }">
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon v-bind="attrs" v-on="on">
+                  mdi-folder-plus-outline
+                </v-icon>
+              </template>
+              <span> New version </span>
+            </v-tooltip>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon v-bind="attrs" v-on="on"> mdi-pencil </v-icon>
+              </template>
+              <span>Edit</span>
+            </v-tooltip>
+          </template>
+        </v-data-table>
       </v-col>
     </v-row>
     <Form v-if="openForm" @closeForm="closeForm()" />
-    <v-btn
-      class="mx-2"
-      fab
-      right
-      bottom
-      fixed
-      dark
-      large
-      color="primary"
-      @click="openForm = !openForm"
-    >
-      <v-icon dark> mdi-plus </v-icon>
-    </v-btn>
   </div>
 </template>
 
@@ -64,11 +72,19 @@ export default Vue.extend({
         headers: [
           {
             text: 'Id',
-            align: 'start',
             sortable: false,
             value: '_id',
           },
-          { text: 'Description', value: 'description' },
+          {
+            text: 'Description',
+            sortable: false,
+            value: 'description',
+          },
+          {
+            text: 'Actions',
+            sortable: false,
+            value: 'action',
+          },
         ],
         items: [] as ProjectModelInterface[],
         count: 0,

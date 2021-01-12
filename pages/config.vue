@@ -1,0 +1,29 @@
+<template>
+  <div>
+    <title-bar title="Settings" />
+    <v-row>
+      <v-col cols="12" class="pa-10">
+        <h1 style="margin: 0 auto">Settings</h1>
+        <v-expansion-panels>
+          <v-expansion-panel>
+            <v-expansion-panel-header>General</v-expansion-panel-header>
+          </v-expansion-panel>
+          <v-expansion-panel>
+            <v-expansion-panel-header>Users</v-expansion-panel-header>
+          </v-expansion-panel>
+          <v-expansion-panel>
+            <v-expansion-panel-header>Projects</v-expansion-panel-header>
+          </v-expansion-panel>
+        </v-expansion-panels>
+      </v-col>
+    </v-row>
+  </div>
+</template>
+
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({});
+</script>
+
+<style></style>

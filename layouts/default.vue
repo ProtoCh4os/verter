@@ -2,20 +2,18 @@
   <v-app>
     <v-navigation-drawer v-if="logged" v-model="drawer" fixed app>
       <v-list>
-        <v-list-item router to="/" exact>
+        <v-list-item
+          v-for="(item, index) in sidebar"
+          :key="index"
+          router
+          :to="item.route"
+          exact
+        >
           <v-list-item-action>
-            <v-icon>mdi-view-dashboard</v-icon>
+            <v-icon>{{ item.icon }} </v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title> Dashboard </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item router to="/config">
-          <v-list-item-action>
-            <v-icon>mdi-cog</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title> Settings </v-list-item-title>
+            <v-list-item-title> {{ item.name }} </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item exact @click="logout">
@@ -51,6 +49,23 @@ export default {
     return {
       drawer: false,
       title: 'D-ops',
+      sidebar: [
+        {
+          name: 'Dashboard',
+          icon: 'mdi-view-dashboard',
+          route: '/',
+        },
+        {
+          name: 'Projects',
+          icon: 'mdi-format-list-text',
+          route: '/projects',
+        },
+        {
+          name: 'Settings',
+          icon: 'mdi-cog',
+          route: '/config',
+        },
+      ],
     };
   },
   computed: {
