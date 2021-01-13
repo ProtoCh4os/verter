@@ -15,6 +15,7 @@ export type ProjectModelInterface = MongoModelInterface & {
     patch: number;
     versionId: string;
     timestamp: string;
+    changelog: string;
   }[];
 };
 
@@ -33,6 +34,7 @@ export const ProjectModel = new Schema<ProjectModelInterface>({
       patch: Number,
       versionId: String,
       timestamp: String,
+      changelog: String,
     },
   ],
 });

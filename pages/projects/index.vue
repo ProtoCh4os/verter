@@ -27,7 +27,15 @@
           <template v-slot:item.action="{ item }">
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
-                <v-icon v-bind="attrs" v-on="on">
+                <v-icon v-bind="attrs" @click="listVersions(item)" v-on="on">
+                  mdi-format-list-checkbox
+                </v-icon>
+              </template>
+              <span>List Versions</span>
+            </v-tooltip>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon v-bind="attrs" @click="newVersion(item)" v-on="on">
                   mdi-folder-plus-outline
                 </v-icon>
               </template>
@@ -35,7 +43,7 @@
             </v-tooltip>
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
-                <v-icon v-bind="attrs" @click="openProject(item)" v-on="on">
+                <v-icon v-bind="attrs" @click="editProject(item)" v-on="on">
                   mdi-pencil
                 </v-icon>
               </template>
@@ -57,7 +65,7 @@
 import Vue from 'vue';
 import { ProjectFormInterface } from '~/api/interfaces/forms/project';
 import { ProjectModelInterface } from '~/api/models/Project';
-import Form from './form.vue';
+import Form from '~/components/ProjectForm.vue';
 
 export default Vue.extend({
   components: {
@@ -66,7 +74,11 @@ export default Vue.extend({
   async fetch() {
     const { projects, count } = await this.$sdk.project.list();
     this.projects.count = count;
-    this.projects.items = projects;
+    this.projects.items = projects.map((project) => ({
+      id: (project._id as unknown) as string,
+      ...project,
+      ...project.config,
+    }));
     this.projects.loading = false;
   },
   data() {
@@ -93,7 +105,7 @@ export default Vue.extend({
             value: 'action',
           },
         ],
-        items: [] as ProjectModelInterface[],
+        items: [] as ProjectFormInterface[],
         count: 0,
         loading: true,
       },
@@ -114,7 +126,13 @@ export default Vue.extend({
         this.changePage(this.page);
       }, 500);
     },
-    openProject(project: ProjectModelInterface) {
+    newVersion(item: ProjectModelInterface) {
+      this.$router.push('/projects/' + item._id + '/form');
+    },
+    listVersions(item: ProjectModelInterface) {
+      this.$router.push('/projects/' + item._id);
+    },
+    editProject(project: ProjectModelInterface) {
       this.form.editData = {
         id: (project._id as unknown) as string,
         ...project,
@@ -129,7 +147,11 @@ export default Vue.extend({
       const { projects, count } = await this.$sdk.project.list(page);
 
       this.projects.count = count;
-      this.projects.items = projects;
+      this.projects.items = projects.map((project) => ({
+        id: (project._id as unknown) as string,
+        ...project,
+        ...project.config,
+      }));
 
       this.projects.loading = false;
     },

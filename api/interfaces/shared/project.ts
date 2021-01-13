@@ -5,6 +5,10 @@ export interface ResNewProject {
 }
 
 export interface ResListProject {
-  projects: ProjectModelInterface[];
+  projects: Omit<ProjectModelInterface, 'versions'>[];
   count: number;
+}
+
+export interface ResDetailsProject {
+  project: ProjectModelInterface;
 }

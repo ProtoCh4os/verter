@@ -1,9 +1,29 @@
 import { ResBody } from '~/api/interfaces/shared/common';
 import { NuxtAxiosInstance } from '@nuxtjs/axios';
-import { ResListProject, ResNewProject } from '~/api/interfaces/shared/project';
+import {
+  ResDetailsProject,
+  ResListProject,
+  ResNewProject,
+} from '~/api/interfaces/shared/project';
 import { Schema } from '~/api/validators/project/add';
 
 export default (instance: NuxtAxiosInstance) => ({
+  details: async (id: string): Promise<ResDetailsProject | false> => {
+    try {
+      const req = await instance.get<ResBody<ResDetailsProject>>(
+        '/project/' + id,
+      );
+
+      const { data } = req;
+
+      if (data.success) {
+        return data.payload;
+      }
+      return false;
+    } catch (err) {
+      return false;
+    }
+  },
   add: async (form: Schema): Promise<ResNewProject | false> => {
     try {
       const req = await instance.put<ResBody<ResNewProject>>('/project/', form);

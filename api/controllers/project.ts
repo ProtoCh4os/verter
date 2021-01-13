@@ -1,5 +1,10 @@
 import { Types } from 'mongoose';
 import Project from '../classes/Project';
+import {
+  ResDetailsProject,
+  ResListProject,
+  ResNewProject,
+} from '../interfaces/shared/project';
 import { ProjectModelInterface } from '../models/Project';
 import { Schema as AddSchema } from '../validators/project/add';
 import { Schema as EditSchema } from '../validators/project/edit';
@@ -8,7 +13,7 @@ export async function list(req: Req, res: Res): Promise<Res> {
   const page = req.query.page ? Number(req.query.page) - 1 : 0;
   const { data: projects, count } = await Project.list(page);
 
-  return respondSuccess(res, { projects, count });
+  return respondSuccess<ResListProject>(res, { projects, count });
 }
 
 export async function add(req: Req<AddSchema>, res: Res): Promise<Res> {
@@ -30,7 +35,9 @@ export async function add(req: Req<AddSchema>, res: Res): Promise<Res> {
     },
     versions: [],
   });
-  return respondSuccess(res, { id: ins.insertedIds[0] });
+  return respondSuccess<ResNewProject>(res, {
+    id: ins.insertedIds[0].toHexString(),
+  });
 }
 
 export async function edit(req: Req<EditSchema>, res: Res): Promise<Res> {
@@ -60,10 +67,11 @@ export async function edit(req: Req<EditSchema>, res: Res): Promise<Res> {
   return respondSuccess(res);
 }
 
-export async function del(_req: Req, res: Res): Promise<Res> {
-  return respondError(res);
-}
+export async function details(req: Req, res: Res): Promise<Res> {
+  const { id } = req.params;
 
-export async function details(_req: Req, res: Res): Promise<Res> {
-  return respondError(res);
+  const [project] = await Project.find({ _id: Types.ObjectId(id) });
+  if (!project) return respondError(res, 'Project not found', 404);
+
+  return respondSuccess<ResDetailsProject>(res, { project });
 }
