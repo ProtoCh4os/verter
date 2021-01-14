@@ -24,27 +24,18 @@ export default {
 
   components: true,
 
-  buildModules: [
-    '@nuxt/typescript-build',
-    '@nuxtjs/vuetify',
-    [
-      '@nuxtjs/dotenv',
-      {
-        only: ['BASE_URL'],
-      },
-    ],
-  ],
+  buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify', '@nuxtjs/dotenv'],
 
   modules: [
     '@nuxtjs/axios',
     '@nuxt/http',
     [
       'nuxt-session',
-      (session) => {
+      (session: any) => {
         const MongoStore = mongo(session);
         return {
           name: 'session',
-          secret: process.env.JWT_TOKEN || '414b4c565c84df80263415c3c43fb5de',
+          secret: process.env.SESSION_KEY,
           store: new MongoStore({
             mongooseConnection,
           }),
@@ -76,7 +67,7 @@ export default {
   },
 
   build: {
-    extend(config, ctx) {
+    extend(config: any, ctx: any) {
       if (ctx.isDev) {
         config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map';
       }
@@ -94,7 +85,7 @@ export default {
 
   publicRuntimeConfig: {
     axios: {
-      baseURL: `${process.env.BASE_URL || ''}/api`,
+      baseURL: '/api',
     },
   },
 };

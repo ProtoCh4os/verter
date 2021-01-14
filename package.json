@@ -11,6 +11,7 @@
     "@nuxt/http": "^0.6.1",
     "@nuxt/typescript-runtime": "^2.0.0",
     "@nuxtjs/axios": "^5.12.2",
+    "@types/axios": "^0.14.0",
     "@types/crypto-js": "3.1.44",
     "@types/helmet": "^4.0.0",
     "@types/jsonwebtoken": "^8.5.0",

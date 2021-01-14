@@ -135,9 +135,9 @@ export default Vue.extend({
         this.form.icon = data;
       }
     },
-    close() {
+    close(refresh = false) {
       this.open = false;
-      this.$emit('closeForm');
+      this.$emit('closeForm', refresh);
     },
     save() {
       return debounce(async () => {
@@ -157,13 +157,13 @@ export default Vue.extend({
 
           if (ins) {
             this.$nuxt.$emit(
-              'showError',
+              'alertUser',
               `Project ${this.form.id} updated`,
               'success',
             );
 
             this.saving = false;
-            this.close();
+            this.close(true);
             return;
           }
         } else {
@@ -171,15 +171,15 @@ export default Vue.extend({
 
           if (ins) {
             this.form.id = ins.id;
-            this.$nuxt.$emit('showError', `Project ${ins.id} added`, 'success');
+            this.$nuxt.$emit('alertUser', `Project ${ins.id} added`, 'success');
 
             this.saving = false;
-            this.close();
+            this.close(true);
             return;
           }
         }
 
-        this.$nuxt.$emit('showError', `Saving failed`);
+        this.$nuxt.$emit('alertUser', `Saving failed`);
       })();
     },
   },

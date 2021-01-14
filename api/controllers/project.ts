@@ -70,8 +70,16 @@ export async function edit(req: Req<EditSchema>, res: Res): Promise<Res> {
 export async function details(req: Req, res: Res): Promise<Res> {
   const { id } = req.params;
 
-  const [project] = await Project.find({ _id: Types.ObjectId(id) });
+  const [[project], versions] = await Promise.all([
+    Project.find({ _id: Types.ObjectId(id) }),
+    Project.listVersions(id),
+  ]);
   if (!project) return respondError(res, 'Project not found', 404);
 
-  return respondSuccess<ResDetailsProject>(res, { project });
+  return respondSuccess<ResDetailsProject>(res, {
+    project: {
+      ...project.toObject(),
+      versions,
+    },
+  });
 }

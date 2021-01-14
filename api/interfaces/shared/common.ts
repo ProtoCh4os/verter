@@ -6,5 +6,5 @@ export type ResBody<T extends string | number | CommonObject | any[]> =
     }
   | {
       success: false;
-      error: T;
+      error: string[];
     };

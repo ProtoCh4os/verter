@@ -1,6 +1,27 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-if="logged" v-model="drawer" fixed app>
+    <v-navigation-drawer
+      v-if="logged"
+      v-model="drawer"
+      permanent
+      expand-on-hover
+      fixed
+      app
+    >
+      <v-list-item>
+        <v-list-item-action>
+          <v-avatar color="primary" size="25">
+            <v-icon> mdi-account </v-icon>
+          </v-avatar>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title class="title">
+            Welcome {{ username }}
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider></v-divider>
       <v-list>
         <v-list-item
           v-for="(item, index) in sidebar"
@@ -71,6 +92,9 @@ export default {
   computed: {
     logged() {
       return this.$store.state.session.loggedIn;
+    },
+    username() {
+      return this.$store.state.session?.user?.login || 'User';
     },
   },
   methods: {

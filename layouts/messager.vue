@@ -27,13 +27,13 @@ import Vue from 'vue';
 declare module 'vue/types/vue' {
   interface Vue {
     $emit(
-      event: 'showError',
+      event: 'alertUser',
       message: string,
       type?: 'error' | 'success' | 'info',
     ): this;
 
     $on(
-      event: 'showError',
+      event: 'alertUser',
       callback: (message: string, type: 'error' | 'success' | 'info') => any,
     ): this;
   }
@@ -48,10 +48,10 @@ export default Vue.extend({
     };
   },
   mounted() {
-    this.$nuxt.$on('showError', this.showError);
+    this.$nuxt.$on('alertUser', this.alertUser);
   },
   methods: {
-    showError(error: string, type: 'error' | 'success' | 'info' = 'error') {
+    alertUser(error: string, type: 'error' | 'success' | 'info' = 'error') {
       this.open = false;
       setTimeout(() => {
         this.open = true;

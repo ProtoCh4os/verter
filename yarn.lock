@@ -1357,6 +1357,13 @@
     "@types/browserslist" "*"
     postcss "7.x.x"
 
+"@types/axios@^0.14.0":
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/@types/axios/-/axios-0.14.0.tgz#ec2300fbe7d7dddd7eb9d3abf87999964cafce46"
+  integrity sha1-7CMA++fX3d1+udOr+HmZlkyvzkY=
+  dependencies:
+    axios "*"
+
 "@types/babel__core@^7.1.12":
   version "7.1.12"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.12.tgz#4d8e9e51eb265552a7e4f1ff2219ab6133bdfb2d"
@@ -2412,6 +2419,13 @@ axios-retry@^3.1.9:
   integrity sha512-NFCoNIHq8lYkJa6ku4m+V1837TP6lCa7n79Iuf8/AqATAHYB0ISaAS1eyIenDOfHOLtym34W65Sjke2xjg2fsA==
   dependencies:
     is-retry-allowed "^1.1.0"
+
+axios@*:
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
+  integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
+  dependencies:
+    follow-redirects "^1.10.0"
 
 axios@^0.21.0:
   version "0.21.0"
@@ -3848,6 +3862,7 @@ domutils@^1.5.1, domutils@^1.7.0:
     nuxt "^2.14.6"
     nuxt-session "^1.0.3"
     tsconfig-paths-webpack-plugin "^3.3.0"
+    vuex-module-decorators "^1.0.1"
     winston "^3.3.3"
     yup "^0.32.6"
 

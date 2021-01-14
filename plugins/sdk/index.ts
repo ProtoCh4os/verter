@@ -5,10 +5,12 @@ import { $axios } from '../axios';
 
 import session from './session';
 import project from './project';
+import version from './version';
 
 const _sdk = (ax: NuxtAxiosInstance) => ({
   session: session(ax),
   project: project(ax),
+  version: version(ax),
 });
 
 const sdk = _sdk($axios);
