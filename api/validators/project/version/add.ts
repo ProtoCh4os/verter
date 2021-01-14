@@ -5,7 +5,7 @@ import { validate } from '../../common';
 const schema = object({
   type: string().required().oneOf(['major', 'minor', 'patch']),
   nickname: string().max(20),
-  changelog: string().max(300).required(),
+  changelog: string().max(3000).required(),
 }).required();
 
 export type Schema = {

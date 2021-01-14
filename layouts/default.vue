@@ -48,14 +48,13 @@
       </v-list>
     </v-navigation-drawer>
     <v-app-bar v-if="logged" fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="title" />
     </v-app-bar>
     <v-main class="main">
       <nuxt />
       <messager />
     </v-main>
-    <v-footer absolute app>
+    <v-footer fixed app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>
@@ -69,7 +68,7 @@ export default {
   data() {
     return {
       drawer: false,
-      title: 'D-ops',
+      title: 'Verter',
       sidebar: [
         {
           name: 'Dashboard',

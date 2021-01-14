@@ -1,5 +1,5 @@
 {
-  "name": "dops",
+  "name": "verter",
   "version": "1.0.0",
   "scripts": {
     "dev": "nuxt-ts",
@@ -50,7 +50,6 @@
     "@typescript-eslint/parser": "^4.9.1",
     "babel-eslint": "^10.1.0",
     "cd": "^0.3.3",
-    "dops": "/var/local/dev/dpg/dops",
     "eslint": "^7.10.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^6.12.0",

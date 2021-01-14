@@ -1,10 +1,8 @@
 <template>
   <div>
-    <title-bar title="Settings" />
+    <title-bar title="Projects" />
     <v-row>
       <v-col cols="12" class="pa-10">
-        <h1 style="margin: 0 auto">Projects</h1>
-
         <v-btn
           class="mt-20"
           dark
@@ -32,14 +30,6 @@
                 </v-icon>
               </template>
               <span>List Versions</span>
-            </v-tooltip>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on, attrs }">
-                <v-icon v-bind="attrs" @click="newVersion(item)" v-on="on">
-                  mdi-folder-plus-outline
-                </v-icon>
-              </template>
-              <span> New version </span>
             </v-tooltip>
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
@@ -125,9 +115,6 @@ export default Vue.extend({
         this.form.open = false;
         this.changePage(this.page);
       }, 500);
-    },
-    newVersion(item: ProjectModelInterface) {
-      this.$router.push('/projects/' + item._id + '/form');
     },
     listVersions(item: ProjectModelInterface) {
       this.$router.push('/projects/' + item._id);

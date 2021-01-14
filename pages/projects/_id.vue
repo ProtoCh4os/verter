@@ -6,11 +6,11 @@
       </v-card-title>
       <v-divider></v-divider>
       <v-card-actions>
-        <v-btn color="primary" @click="openForm">
+        <v-btn class="ml-0 mr-2 my-2" color="primary" @click="openForm">
           <v-icon class="mr-3"> mdi-cogs </v-icon>
           Edit
         </v-btn>
-        <v-btn color="primary" @click="openNewVersion">
+        <v-btn class="ml-0 mr-2 my-2" color="primary" @click="openNewVersion">
           <v-icon class="mr-3"> mdi-folder-plus-outline </v-icon>
           New version
         </v-btn>
@@ -70,12 +70,49 @@
         </v-col>
         <v-col cols="12" md="6">
           <h3>Versions</h3>
-          <v-data-table
-            :headers="tableHeaders"
-            :items="versions"
-          ></v-data-table>
+          <v-data-table :headers="tableHeaders" :items="versions">
+            {{ /* eslint-disable-next-line */ }}
+            <template v-slot:item.changelog="{ item }">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon v-bind="attrs" @click="openChangelog(item)" v-on="on">
+                    mdi-text
+                  </v-icon>
+                </template>
+                <span>Read changelog to {{ item.completeVersion }} </span>
+              </v-tooltip>
+            </template>
+            {{ /* eslint-disable-next-line */ }}
+            <template v-slot:item.download="{ item }">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon v-bind="attrs" v-on="on"> mdi-download </v-icon>
+                </template>
+                <span>Download</span>
+              </v-tooltip>
+            </template>
+          </v-data-table>
         </v-col>
       </v-row>
+      <v-dialog v-model="readChangelog.open">
+        <v-card
+          min-width="300px"
+          min-height="100px"
+          class="ma-auto pa-5"
+          elevation="7"
+          outlined
+          @click:outside="closeChangelog"
+        >
+          <v-card-title>
+            <h1 class="ma-5">
+              {{ readChangelog.version }}
+            </h1>
+            <v-icon color="primary" @click="closeChangelog"> mdi-close </v-icon>
+          </v-card-title>
+          <v-divider class="my-2"></v-divider>
+          {{ readChangelog.text }}
+        </v-card>
+      </v-dialog>
       <Form v-if="form.open" :edit-data="editData" @closeForm="closeForm" />
       <v-dialog v-model="versionForm.open">
         <v-card
@@ -114,7 +151,7 @@
                     outlined
                     append-icon="mdi-format-list-bulleted"
                     clearable
-                    counter
+                    counter="3000"
                     full-width
                     label="Changelog"
                   ></v-textarea>
@@ -171,20 +208,24 @@ export default Vue.extend({
       project: null as ProjectModelInterface | null,
       tableHeaders: [
         {
-          text: 'id',
+          text: 'Id',
           value: 'completeVersion',
         },
         {
-          text: 'nickname',
+          text: 'Nickname',
           value: 'versionId',
         },
         {
-          text: 'changelog',
+          text: 'Changelog',
           value: 'changelog',
         },
         {
-          text: 'date',
+          text: 'Date',
           value: 'timestamp',
+        },
+        {
+          text: 'Download',
+          value: 'download',
         },
       ],
       form: {
@@ -196,6 +237,11 @@ export default Vue.extend({
         type: 2,
         changelog: '',
         nickname: '',
+      },
+      readChangelog: {
+        open: false,
+        text: '',
+        version: '',
       },
     };
   },
@@ -280,6 +326,24 @@ export default Vue.extend({
         }
       }
     },
+    openChangelog(
+      item: ProjectModelInterface['versions'][number] & {
+        completeVersion: string;
+      },
+    ) {
+      this.readChangelog = {
+        open: true,
+        text: item.changelog,
+        version: item.completeVersion,
+      };
+    },
+    closeChangelog() {
+      this.readChangelog = {
+        open: false,
+        text: '',
+        version: '',
+      };
+    },
     async submitNewVersion() {
       this.versionForm.loading = true;
 
@@ -288,12 +352,13 @@ export default Vue.extend({
 
         if (res.success) {
           this.$nuxt.$emit('alertUser', 'Version 1.0.0 created', 'success');
+          this.versionForm.loading = false;
+          this.closeNewVersion(true);
         } else {
+          this.versionForm.loading = false;
           this.$nuxt.$emit('alertUser', res.error[0]);
         }
-
-        this.versionForm.loading = false;
-        this.closeNewVersion(true);
+        return;
       }
 
       const res = await this.$sdk.version.add(this.id, {
@@ -307,12 +372,12 @@ export default Vue.extend({
           `Version ${res.payload.version} created`,
           'success',
         );
+        this.versionForm.loading = false;
+        this.closeNewVersion(true);
       } else {
+        this.versionForm.loading = false;
         this.$nuxt.$emit('alertUser', res.error[0]);
       }
-
-      this.versionForm.loading = false;
-      this.closeNewVersion(true);
     },
     getIcon(text: string): string {
       if (/(\.ts)|(ts-node( |$))/.test(text)) return 'mdi-language-typescript';

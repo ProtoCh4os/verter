@@ -4,7 +4,7 @@
       <v-col cols="10" sm="6" md="4" lg="4" xl="4">
         <v-card outlined elevation="5" class="card">
           <v-card-title class="headline text-center">
-            <h1 style="margin: 0 auto">D-ops</h1>
+            <h1 style="margin: 0 auto">Verter</h1>
           </v-card-title>
           <v-form @submit.prevent>
             <v-text-field

@@ -3834,7 +3834,7 @@ domutils@^1.5.1, domutils@^1.7.0:
     dom-serializer "0"
     domelementtype "1"
 
-"dops@file:.":
+"verter@file:.":
   version "1.0.0"
   dependencies:
     "@nuxt/http" "^0.6.1"
