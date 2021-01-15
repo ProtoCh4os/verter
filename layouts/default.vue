@@ -48,7 +48,15 @@
       </v-list>
     </v-navigation-drawer>
     <v-app-bar v-if="logged" fixed app>
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title>
+        <v-img
+          src="/images/brand.png"
+          alt="Verter"
+          max-height="50px"
+          width="127px"
+          contain
+        />
+      </v-toolbar-title>
     </v-app-bar>
     <v-main class="main">
       <nuxt />
@@ -68,7 +76,6 @@ export default {
   data() {
     return {
       drawer: false,
-      title: 'Verter',
       sidebar: [
         {
           name: 'Dashboard',

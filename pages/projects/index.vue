@@ -142,6 +142,9 @@ export default Vue.extend({
 
       this.projects.loading = false;
     },
+    head: {
+      title: 'Projects',
+    },
   },
 });
 </script>

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES2018",
-    "module": "ESNext",
+    "target": "ES2017",
+    "module": "CommonJS",
     "moduleResolution": "Node",
     "lib": ["ESNext", "ESNext.AsyncIterable", "DOM"],
     "typeRoots": ["./node_modules/@types", "./@types"],

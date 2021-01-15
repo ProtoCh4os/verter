@@ -25,5 +25,5 @@ export default Vue.extend({
 
 <style lang="sass" scoped>
 .card
-  background: linear-gradient(90deg, #242F40 0%, #006494 35%, #5C5C5C 100%)
+  background: linear-gradient(90deg, #47BCFF 0%, #4D9AE9 35%, #47BCFF 100%)
 </style>

@@ -401,6 +401,11 @@ export default Vue.extend({
       return 'mdi-console-line';
     },
   },
+  head() {
+    return {
+      title: (this as any).title,
+    };
+  },
 });
 </script>
 
