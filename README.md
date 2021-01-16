@@ -1,4 +1,4 @@
-![Verter](https://raw.githubusercontent.com/ProtoCh4os/verter/master/static/images/brand.png)
+![Verter](https://raw.githubusercontent.com/ProtoCh4os/verter/master/static/brand.png)
 ![build:broken](https://img.shields.io/badge/build-broken-red) ![contributors:1](https://img.shields.io/badge/contributors-1-brightgreen) ![license:GNU GPLv3](https://img.shields.io/badge/license-GNU%20GPLv3-blue)
 
 # What is Verter?
@@ -47,7 +47,7 @@ Verter is powered by:
 - And more!
 
 ### Contributors
-- [@ProtoCh4os (Autor)](https://github.com/ProtoCh4os)
+- [@ProtoCh4os (Author)](https://github.com/ProtoCh4os)
 
 ### License
-Verter's under [GNU GPLv3](https://raw.githubusercontent.com/ProtoCh4os/verter/master/license.txt) License.
+Verter's under [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html) License.
