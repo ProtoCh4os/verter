@@ -4,12 +4,7 @@
       <v-col cols="10" sm="6" md="4" lg="4" xl="4">
         <v-card outlined elevation="5" class="card">
           <v-card-title class="headline text-center">
-            <v-img
-              src="/images/brand.png"
-              alt="Verter"
-              contain
-              max-height="150px"
-            />
+            <v-img src="/brand.png" alt="Verter" contain max-height="150px" />
           </v-card-title>
           <v-form @submit.prevent>
             <v-text-field

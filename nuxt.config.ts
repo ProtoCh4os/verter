@@ -18,7 +18,13 @@ const themeColors = {
 
 const settings: NuxtConfig = {
   target: 'server',
+
   dev: process.env.NODE_ENV !== 'production',
+
+  server: {
+    port: process.env.VERTER_PORT || 3000,
+  },
+
   head: {
     titleTemplate: '%s - Verter',
     title: 'Verter',
@@ -27,14 +33,11 @@ const settings: NuxtConfig = {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/images/favicon.ico' }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
   css: ['./assets/variables.scss'],
 
-  plugins: [
-    { src: '~/plugins/sdk' },
-    { src: '~/plugins/startup', mode: 'client' },
-  ],
+  plugins: [{ src: '~/plugins/sdk' }],
 
   components: true,
 

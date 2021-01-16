@@ -14,11 +14,12 @@
     "noEmit": true,
     "experimentalDecorators": true,
     "baseUrl": ".",
+    "outDir": "./bin",
     "paths": {
       "~/*": ["./*"],
       "@/*": ["./*"]
     },
-    "types": ["@types/node", "@nuxt/types", "@nuxtjs/axios"]
+    "types": ["@types/node", "@nuxt/types", "@nuxtjs/axios", "@nuxtjs/vuetify"]
   },
   "include": ["./@types", "./**/*.ts", "./**/*.vue"],
   "exclude": ["node_modules", ".nuxt", "dist"]

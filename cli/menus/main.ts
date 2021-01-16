@@ -1,6 +1,6 @@
 import { prompt } from 'inquirer';
 import { say } from '../utils';
-import configMenu from './config';
+// import configMenu from './config';
 
 export default async (): Promise<void> => {
   say('Welcome to Verter CLI', 'white');
@@ -10,7 +10,7 @@ export default async (): Promise<void> => {
   while (!exit) {
     const choices: string[] = [];
 
-    choices.push('settings', 'Sair');
+    choices.push('Settings', 'Exit');
 
     const { option } = await prompt([
       {
@@ -22,10 +22,10 @@ export default async (): Promise<void> => {
     ]);
 
     switch (option) {
-      case 'settings':
-        console.log('config');
+      case 'Settings':
+        exit = true;
         break;
-      case 'exit':
+      case 'Exit':
         exit = true;
         break;
       default:

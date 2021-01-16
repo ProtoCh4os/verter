@@ -3,10 +3,16 @@ import gulp from 'gulp';
 import ts from 'gulp-typescript';
 import uglify from 'gulp-uglify';
 
-const tsProject = ts.createProject('tsconfig.json');
+const tsConfig = require('./tsconfig.json');
+
+const tsProject = ts.createProject(tsConfig.compilerOptions);
 
 gulp.task('typescript', () =>
-  tsProject.src().pipe(tsProject()).js.pipe(uglify()).pipe(gulp.dest('bin')),
+  gulp
+    .src('./cli/**/*.ts')
+    .pipe(tsProject())
+    .js.pipe(uglify())
+    .pipe(gulp.dest('./bin')),
 );
 
 gulp.task('default', gulp.series('typescript'));

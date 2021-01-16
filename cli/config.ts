@@ -1,2 +1,2 @@
-import config from 'configstore';
+// import config from 'configstore';
 

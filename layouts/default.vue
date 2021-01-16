@@ -51,7 +51,7 @@
     <v-app-bar v-if="logged" fixed app dark>
       <v-toolbar-title>
         <v-img
-          src="/images/brand.png"
+          src="/brand.png"
           alt="Verter"
           max-height="50px"
           width="127px"
