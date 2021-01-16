@@ -9,7 +9,7 @@
       >
         <v-card>
           <v-form @submit.prevent="save">
-            <v-toolbar dark color="primary" @>
+            <v-toolbar dark color="primary">
               <v-btn icon dark @click="close()">
                 <v-icon>mdi-close</v-icon>
               </v-btn>

@@ -4,6 +4,7 @@
       v-if="logged"
       v-model="drawer"
       permanent
+      dark
       expand-on-hover
       fixed
       app
@@ -47,7 +48,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar v-if="logged" fixed app>
+    <v-app-bar v-if="logged" fixed app dark>
       <v-toolbar-title>
         <v-img
           src="/images/brand.png"
@@ -62,9 +63,7 @@
       <nuxt />
       <messager />
     </v-main>
-    <v-footer fixed app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+    <Footer />
   </v-app>
 </template>
 
@@ -107,6 +106,9 @@ export default {
     logout() {
       this.$store.commit('session/logout');
       this.$router.replace('/login');
+    },
+    toggleTheme() {
+      this.$vuetify.theme.isDark = !this.$vuetify.theme.isDark;
     },
   },
 };

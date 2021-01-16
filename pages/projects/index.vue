@@ -4,50 +4,47 @@
     <v-row>
       <v-col cols="12" class="pa-10">
         <v-btn
-          class="mt-20"
+          class="mt-20 floating"
           dark
           color="primary"
           fab
-          style="float: right; margin-top: -70px; position: relative"
           @click="openForm"
         >
           <v-icon dark> mdi-plus </v-icon>
         </v-btn>
-        <v-data-table
-          :loading="projects.loading"
-          :page="page"
-          :headers="projects.headers"
-          :items="projects.items"
-          :server-items-length="projects.count"
-          @update:page="changePage"
-        >
-          {{ /* eslint-disable-next-line */ }}
-          <template v-slot:item.action="{ item }">
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on, attrs }">
-                <v-icon v-bind="attrs" @click="listVersions(item)" v-on="on">
-                  mdi-format-list-checkbox
-                </v-icon>
-              </template>
-              <span>List Versions</span>
-            </v-tooltip>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on, attrs }">
-                <v-icon v-bind="attrs" @click="editProject(item)" v-on="on">
-                  mdi-pencil
-                </v-icon>
-              </template>
-              <span>Edit</span>
-            </v-tooltip>
-          </template>
-        </v-data-table>
+        <v-card outlined elevation="7">
+          <v-data-table
+            :loading="projects.loading"
+            :page="page"
+            :headers="projects.headers"
+            :items="projects.items"
+            :server-items-length="projects.count"
+            @update:page="changePage"
+          >
+            {{ /* eslint-disable-next-line */ }}
+            <template v-slot:item.action="{ item }">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon v-bind="attrs" @click="listVersions(item)" v-on="on">
+                    mdi-format-list-checkbox
+                  </v-icon>
+                </template>
+                <span>List Versions</span>
+              </v-tooltip>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon v-bind="attrs" @click="editProject(item)" v-on="on">
+                    mdi-pencil
+                  </v-icon>
+                </template>
+                <span>Edit</span>
+              </v-tooltip>
+            </template>
+          </v-data-table>
+        </v-card>
       </v-col>
     </v-row>
-    <Form
-      v-if="form.open"
-      :edit-data="form.editData"
-      @closeForm="closeForm()"
-    />
+    <Form v-if="form.open" :edit-data="form.editData" @closeForm="closeForm" />
   </div>
 </template>
 
@@ -109,11 +106,11 @@ export default Vue.extend({
     openForm() {
       this.form.open = !this.form.open;
     },
-    closeForm() {
+    closeForm(refresh = false) {
       this.form.editData = undefined;
       setTimeout(() => {
         this.form.open = false;
-        this.changePage(this.page);
+        if (refresh) this.changePage(this.page);
       }, 500);
     },
     listVersions(item: ProjectModelInterface) {
@@ -142,11 +139,16 @@ export default Vue.extend({
 
       this.projects.loading = false;
     },
-    head: {
-      title: 'Projects',
-    },
+  },
+  head: {
+    title: 'Projects',
   },
 });
 </script>
 
-<style></style>
+<style scoped lang="sass">
+.floating
+  float: right
+  margin-top: -70px
+  position: relative
+</style>

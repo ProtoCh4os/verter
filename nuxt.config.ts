@@ -1,3 +1,4 @@
+import { NuxtConfig } from '@nuxt/types';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import mongooseConnection from './api/services/mongo';
 import mongo from 'connect-mongo';
@@ -5,7 +6,17 @@ import { config } from 'dotenv';
 
 config();
 
-export default {
+const themeColors = {
+  primary: '#47BCFF',
+  secondary: '#556F44',
+  accent: '#7161EF',
+  error: '#FF5252',
+  info: '#2196F3',
+  success: '#4CAF50',
+  warning: '#FFC107',
+};
+
+const settings: NuxtConfig = {
   target: 'server',
   dev: process.env.NODE_ENV !== 'production',
   head: {
@@ -20,7 +31,10 @@ export default {
   },
   css: ['./assets/variables.scss'],
 
-  plugins: [{ src: '~/plugins/sdk' }],
+  plugins: [
+    { src: '~/plugins/sdk' },
+    { src: '~/plugins/startup', mode: 'client' },
+  ],
 
   components: true,
 
@@ -51,13 +65,10 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark: false,
       themes: {
-        dark: {
-          primary: '#47BCFF',
-          secondary: '#242F40',
-          accent: '#4D9AE9',
-        },
+        dark: themeColors,
+        light: themeColors,
       },
     },
   },
@@ -89,3 +100,5 @@ export default {
     },
   },
 };
+
+export default settings;
