@@ -73,7 +73,7 @@ const settings: NuxtConfig = {
         dark: themeColors,
         light: themeColors,
       },
-    },
+    } as any,
   },
 
   router: {
@@ -81,7 +81,7 @@ const settings: NuxtConfig = {
   },
 
   build: {
-    extend(config: any, ctx: any) {
+    extend(config, ctx) {
       if (ctx.isDev) {
         config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map';
       }

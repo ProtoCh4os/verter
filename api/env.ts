@@ -2,6 +2,7 @@ import fs from 'fs';
 import p from 'path';
 import dotenv from 'dotenv';
 import { string, object } from 'yup';
+import cfg from '../nuxt.config';
 
 const schema = object({
   // BASE
@@ -25,4 +26,7 @@ const env = schema.validateSync(process.env, {
   abortEarly: true,
 });
 
-export default env;
+export default {
+  ...env,
+  NODE_ENV: cfg?.dev ? 'development' : 'production',
+};

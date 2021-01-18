@@ -1,5 +1,4 @@
 import { Types } from 'mongoose';
-import project from '~/plugins/sdk/project';
 import { ProjectModel, ProjectModelInterface } from '../models/Project';
 import Common from './Common';
 

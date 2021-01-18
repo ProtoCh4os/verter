@@ -1,3 +1,4 @@
+import 'express-async-errors';
 import './config/globals';
 import http, { Server } from 'http';
 import helmet from 'helmet';
@@ -12,11 +13,6 @@ import { isObject, toPairs } from 'lodash';
 import { ValidationError } from 'yup';
 import routes from './routes';
 import logger from './services/logger';
-import cfg from '../nuxt.config';
-
-if (!cfg.dev) {
-  require('express-async-errors');
-}
 
 class App {
   public app: Application;
@@ -69,13 +65,12 @@ class App {
     res: Response,
     _next: Next,
   ): Response | void {
-    if (err instanceof SyntaxError && 'body' in err && !res.headersSent) {
+    if (err instanceof SyntaxError && 'body' in err && !res.headersSent)
       return respondError(res, 'Invalid JSON data', 400);
-    }
     if (err instanceof ValidationError)
       return respondError(res, err.errors, 400);
 
-    logger.error(err, req);
+    logger.error(err, req.originalUrl);
 
     return respondError(res);
   }
