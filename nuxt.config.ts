@@ -35,7 +35,7 @@ const settings: NuxtConfig = {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
-  css: ['./assets/variables.scss'],
+  css: ['./assets/variables.scss', './assets/base.sass'],
 
   plugins: [{ src: '~/plugins/sdk' }],
 
@@ -66,7 +66,6 @@ const settings: NuxtConfig = {
   serverMiddleware: [{ path: '/api', handler: '~/api/index.ts' }],
 
   vuetify: {
-    customVariables: ['~/assets/variables.scss'],
     theme: {
       dark: false,
       themes: {

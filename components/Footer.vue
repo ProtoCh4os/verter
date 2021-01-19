@@ -24,6 +24,12 @@ export default Vue.extend({
       canChangeTheme: true,
     };
   },
+  beforeMount() {
+    if (localStorage) {
+      const isDark = localStorage.getItem('isDark');
+      this.$vuetify.theme.dark = isDark === 'on';
+    }
+  },
   methods: {
     toggleTheme() {
       this.canChangeTheme = false;
@@ -32,10 +38,18 @@ export default Vue.extend({
       }, 200);
       return debounce(() => {
         this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+        if (localStorage) {
+          localStorage.setItem(
+            'isDark',
+            this.$vuetify.theme.dark ? 'on' : 'off',
+          );
+        }
       })();
     },
   },
 });
 </script>
 
-<style></style>
+<style lang="sass">
+@import '~/assets/base.sass'
+</style>

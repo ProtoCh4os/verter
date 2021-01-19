@@ -1,6 +1,13 @@
 <template>
-  <v-row>
-    <v-card class="card" elevation="5" width="100%" max-height="50px" light>
+  <v-row class="mb-1">
+    <v-card
+      class="card py-2"
+      elevation="5"
+      width="100%"
+      max-height="55px"
+      light
+      tile
+    >
       <h1 class="text-center">{{ title }}</h1>
     </v-card></v-row
   >

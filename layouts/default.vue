@@ -61,17 +61,15 @@
     </v-app-bar>
     <v-main class="main">
       <nuxt />
-      <messager />
     </v-main>
     <Footer />
   </v-app>
 </template>
 
-<script>
-import messager from './messager.vue';
+<script lang="ts">
+import Vue from 'vue';
 
-export default {
-  components: { messager },
+export default Vue.extend({
   data() {
     return {
       drawer: false,
@@ -107,13 +105,6 @@ export default {
       this.$store.commit('session/logout');
       this.$router.replace('/login');
     },
-    toggleTheme() {
-      this.$vuetify.theme.isDark = !this.$vuetify.theme.isDark;
-    },
   },
-};
+});
 </script>
-
-<style lang="sass">
-@import '~/assets/base.sass'
-</style>

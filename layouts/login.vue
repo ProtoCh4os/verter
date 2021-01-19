@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-main class="main">
+    <v-main>
       <Nuxt />
     </v-main>
     <Footer />
@@ -12,7 +12,3 @@ import Vue from 'vue';
 
 export default Vue.extend({});
 </script>
-
-<style lang="sass">
-@import '~/assets/base.sass'
-</style>
