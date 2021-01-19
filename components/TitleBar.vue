@@ -1,14 +1,14 @@
 <template>
-  <v-row class="mb-1">
+  <v-row>
     <v-card
-      class="card py-2"
+      class="card"
       elevation="5"
       width="100%"
       max-height="55px"
       light
       tile
     >
-      <h1 class="text-center">{{ title }}</h1>
+      <h1 class="text-center my-auto">{{ title }}</h1>
     </v-card></v-row
   >
 </template>
