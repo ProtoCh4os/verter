@@ -2,6 +2,7 @@
   <v-app>
     <v-main>
       <Nuxt />
+      <Messager />
     </v-main>
     <Footer />
   </v-app>

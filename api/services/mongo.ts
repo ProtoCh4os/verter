@@ -1,9 +1,14 @@
-import mongoose from 'mongoose';
 import env from '../env';
+import mongoose from 'mongoose';
+import { config } from 'dotenv';
 
-mongoose.connect(`mongodb://${env.MONGODB_HOST}`, {
-  user: env.MONGODB_USER,
-  pass: env.MONGODB_PASS,
+if (!env) {
+  config();
+}
+
+mongoose.connect(`mongodb://${env?.VERTER_MONGO_HOST || process.env.VERTER_MONGO_HOST}`, {
+  user: env?.VERTER_MONGO_USER || process.env.VERTER_MONGO_USER,
+  pass: env?.VERTER_MONGO_PASS || process.env.VERTER_MONGO_PASS,
   useUnifiedTopology: false,
   useNewUrlParser: true,
   connectTimeoutMS: 60000,
@@ -15,4 +20,6 @@ mongoose.connection.on('error', function (err) {
   throw new Error(`connection to mongo failed ${err}`);
 });
 
-export default mongoose.connection.useDb(env.MONGODB_DB);
+export default mongoose.connection.useDb(
+  env?.VERTER_MONGO_DB || process.env.VERTER_MONGO_DB || 'verter',
+);

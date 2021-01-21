@@ -19,7 +19,7 @@ const themeColors = {
 const settings: NuxtConfig = {
   target: 'server',
 
-  dev: process.env.NODE_ENV !== 'production',
+  dev: process.env.VERTER_ENV !== 'production',
 
   server: {
     port: process.env.VERTER_PORT || 3000,
@@ -52,7 +52,7 @@ const settings: NuxtConfig = {
         const MongoStore = mongo(session);
         return {
           name: 'session',
-          secret: process.env.SESSION_KEY,
+          secret: process.env.VERTER_SESSION_KEY,
           store: new MongoStore({
             mongooseConnection,
           }),

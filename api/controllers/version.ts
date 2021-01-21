@@ -1,5 +1,7 @@
 import { Types } from 'mongoose';
+import Jobs from '../classes/Jobs';
 import Project from '../classes/Project';
+import { BuildProjectJobInterface } from '../interfaces/shared/jobs';
 import { Schema } from '../validators/project/version/add';
 
 export async function add(req: Req<Schema>, res: Res): Promise<Res> {
@@ -22,6 +24,14 @@ export async function add(req: Req<Schema>, res: Res): Promise<Res> {
       minor: 0,
       patch: 0,
     });
+    Jobs.add('build', {
+      id: projectId,
+      version: '1.0.0',
+      buildSteps: project.toObject().config.buildCommands,
+      output: project.toObject().config.outputFolder,
+      runtimeSteps: project.toObject().config.outputRuntime,
+      stdout: [],
+    } as BuildProjectJobInterface);
     return respondSuccess(res, { version: '1.0.0' });
   }
 
@@ -43,14 +53,24 @@ export async function add(req: Req<Schema>, res: Res): Promise<Res> {
       break;
   }
 
-  await Project.newVersion({
-    projectId,
-    major,
-    minor,
-    patch,
-    changelog,
-    nickname: type === 'major' ? nickname : lastVersion.versionId,
-  });
+  await Promise.all([
+    Project.newVersion({
+      projectId,
+      major,
+      minor,
+      patch,
+      changelog,
+      nickname: type === 'major' ? nickname : lastVersion.versionId,
+    }),
+    Jobs.add('build', {
+      id: projectId,
+      version: [major, minor, patch].join('.'),
+      buildSteps: project.toObject().config.buildCommands,
+      output: project.toObject().config.outputFolder,
+      runtimeSteps: project.toObject().config.outputRuntime,
+      stdout: [],
+    } as BuildProjectJobInterface),
+  ]);
 
   return respondSuccess(res, { version: [major, minor, patch].join('.') });
 }

@@ -61,6 +61,7 @@
     </v-app-bar>
     <v-main class="main">
       <nuxt />
+      <Messager />
     </v-main>
     <Footer />
   </v-app>

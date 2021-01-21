@@ -3,7 +3,7 @@ import jwtwebtoken from 'jsonwebtoken';
 import env from '../env';
 
 const defaultData = {
-  secret: env.SESSION_KEY,
+  secret: env.VERTER_SESSION_KEY,
   expiresIn: 3 * 24 * 60 * 60 * 1000,
 };
 
@@ -16,12 +16,12 @@ export const hash = (payload: string, salt: string): string => {
   return CryptoJS.PBKDF2(payload, salt, 10000, 16, 'SHA512').toString();
 };
 
-export const encrypt = (payload: string, key = env.SESSION_KEY): string => {
+export const encrypt = (payload: string, key = env.VERTER_SESSION_KEY): string => {
   if (!key) throw new Error('Key not provided');
   return CryptoJS.AES.encrypt(payload, key).toString();
 };
 
-export const decrypt = (payload: string, key = env.SESSION_KEY): string => {
+export const decrypt = (payload: string, key = env.VERTER_SESSION_KEY): string => {
   if (!key) throw new Error('Key not provided');
   return CryptoJS.AES.decrypt(payload, key).toString(CryptoJS.enc.Utf8);
 };

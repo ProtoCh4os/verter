@@ -27,6 +27,7 @@ module.exports = {
   // add your custom rules here
   rules: {
     'import/no-mutable-exports': 'off',
+    'promise/param-names': 'off',
     'no-undef': 'off',
     'import/order': 'off',
     'require-await': 'off',

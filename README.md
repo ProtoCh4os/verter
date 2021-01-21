@@ -40,9 +40,8 @@ Running instances of Verter's CLI can then be monitored through Verter's UI, kee
 Verter is powered by: 
 - [Typescript](http://typescriptlang.org/)
 - [Nuxt.JS](https://www.npmjs.com/package/nuxt)
-- [Bull](https://www.npmjs.com/package/bull)
 - [MongoDB](https://www.mongodb.com/)
-- [Redis](https://redis.io/)
+- [Agenda](https://github.com/agenda/agenda)
 - [Express](https://www.npmjs.com/package/express)
 - [Socket.IO](https://socket.io/)
 - And more!
