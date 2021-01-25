@@ -23,28 +23,36 @@
   </v-app>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue, { PropOptions } from 'vue';
+import consola from 'consola';
+
+export default Vue.extend({
   layout: 'empty',
   props: {
     error: {
       type: Object,
       default: null,
-    },
+    } as PropOptions<{ statusCode: number; message: string }>,
   },
   data() {
     return {
-      githubLink: 'https://github.com/protoch4os',
+      githubLink: 'https://github.com/ProtoCh4os/verter',
     };
+  },
+  mounted() {
+    consola.error(this.error.statusCode + ':' + this.error.message);
   },
   head() {
     const title =
-      this.error.statusCode === 404 ? this.pageNotFound : this.otherError;
+      this.error.statusCode === 404
+        ? 'Page not found'
+        : 'Internal Server Error';
     return {
       title,
     };
   },
-};
+});
 </script>
 
 <style lang="sass" scoped>

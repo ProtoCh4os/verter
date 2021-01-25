@@ -8,6 +8,7 @@ import express, {
   Response,
   Request,
   Application,
+  Router,
 } from 'express';
 import { isObject, toPairs } from 'lodash';
 import { ValidationError } from 'yup';
@@ -19,8 +20,11 @@ class App {
 
   public server!: Server;
 
+  public api: Router;
+
   public constructor() {
     this.app = express();
+    this.api = Router();
     this.middlewares();
     this.routes();
 
@@ -28,22 +32,23 @@ class App {
   }
 
   private build(): void {
+    this.app.use(this.api);
     this.server = http.createServer(this.app);
   }
 
   private middlewares(): void {
-    this.app.use(json());
-    this.app.use(urlencoded({ extended: true }));
-    this.app.use(helmet());
+    this.api.use(json());
+    this.api.use(urlencoded({ extended: true }));
+    this.api.use(helmet());
   }
 
   private routes(): void {
-    this.app.use(this.decode);
+    this.api.use(this.decode);
 
-    this.app.use(routes);
+    this.api.use(routes);
 
-    this.app.use(this.errorHandler);
-    this.app.use(this.routeNotFound);
+    this.api.use(this.errorHandler);
+    this.api.use(this.routeNotFound);
   }
 
   private decode(req: Req, _res: Res, next: Next): void {

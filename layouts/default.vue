@@ -95,12 +95,13 @@ export default Vue.extend({
   },
   computed: {
     logged() {
-      return this.$store.state.session.loggedIn;
+      return this.$store.state.session?.loggedIn;
     },
     username() {
       return this.$store.state.session?.user?.login || 'User';
     },
   },
+  middleware: 'session',
   methods: {
     logout() {
       this.$store.commit('session/logout');

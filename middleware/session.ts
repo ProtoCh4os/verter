@@ -7,8 +7,7 @@ type Params = Context & {
   };
 };
 
-const middleWare = ({ store, redirect, req, route }: Params) => {
-  if (!store.state.session.loggedIn && route.path === '/login') return;
+const middleWare = ({ store, redirect, req }: Params) => {
   if (store.state.session.loggedIn) return;
   if (req?.session?.auth) {
     if (!store.state.session.loggedIn)

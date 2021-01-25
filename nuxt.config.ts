@@ -75,10 +75,6 @@ const settings: NuxtConfig = {
     } as any,
   },
 
-  router: {
-    middleware: ['session'],
-  },
-
   build: {
     extend(config, ctx) {
       if (ctx.isDev) {

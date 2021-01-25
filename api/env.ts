@@ -1,12 +1,13 @@
 import fs from 'fs';
 import p from 'path';
 import dotenv from 'dotenv';
-import { string, object } from 'yup';
+import { string, object, number } from 'yup';
 import cfg from '../nuxt.config';
 
 const schema = object({
   // BASE
   VERTER_SESSION_KEY: string().required(),
+  VERTER_PORT: number().min(1).max(65565),
   VERTER_STORAGE: string()
     .required()
     .matches(/[^\0]+/)

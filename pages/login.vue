@@ -50,6 +50,7 @@ import { getModule } from 'vuex-module-decorators';
 import session from '~/store/session';
 
 export default Vue.extend({
+  layout: 'login',
   data() {
     return {
       form: {
